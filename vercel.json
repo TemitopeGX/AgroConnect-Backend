@@ -12,6 +12,36 @@
       "dest": "/api/index.js"
     },
     {
+      "src": "/api/auth/create-user",
+      "methods": ["POST"],
+      "dest": "/api/auth/create-user.js"
+    },
+    {
+      "src": "/api/auth/check-user",
+      "methods": ["POST"],
+      "dest": "/api/auth/check-user.js"
+    },
+    {
+      "src": "/api/produce/create",
+      "methods": ["POST"],
+      "dest": "/api/produce/create.js"
+    },
+    {
+      "src": "/api/produce/list",
+      "methods": ["GET"],
+      "dest": "/api/produce/list.js"
+    },
+    {
+      "src": "/api/orders/place",
+      "methods": ["POST"],
+      "dest": "/api/orders/place.js"
+    },
+    {
+      "src": "/api/orders/my-orders",
+      "methods": ["GET"],
+      "dest": "/api/orders/my-orders.js"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     }
