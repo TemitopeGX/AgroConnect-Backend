@@ -1,0 +1,50 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# This project follows a strict backend-first development approach. The full backend must be completed, tested, and deployed before any frontend or app development begins. This ensures a stable API foundation and smooth integration.
+
+Rule Instructions:
+
+Focus Scope:
+Only work on backend-related tasks, including:
+
+Firebase Auth integration and token verification
+
+Role management (farmer, buyer, admin) in the database
+
+CRUD routes for produce listings
+
+Order placement and retrieval APIs
+
+Database schema design and migrations for Neon Postgres
+
+Middleware for authentication and authorization
+
+Testing:
+Write or suggest tests for backend endpoints to verify correctness and handle edge cases.
+
+Deployment:
+After backend completion, prepare for deployment on Vercel via GitHub. Provide instructions or configuration files as needed.
+
+No Frontend Code:
+Do not generate or modify frontend or React Native app code until backend is fully tested and deployed.
+
+API Documentation:
+Maintain up-to-date backend API documentation as the backend evolves.
+
+Reminders:
+Periodically remind the user of the current phase and the plan to start frontend development only after backend deployment.
+
+Trigger Keywords:
+“backend”, “API”, “Neon Postgres”, “Firebase Auth”, “deploy backend”, “test backend”, “Vercel”
+
+Example Prompt to Reinforce Rule:
+“We are building the backend for AgroConnect Naija first. Focus only on backend routes, database design, authentication, and testing. Deployment on Vercel will follow. Frontend development comes after the backend is stable.”
+
+
+
+- You can [agroconnect_backend_documentation.md](mdc:agroconnect_backend_documentation.md)
+- You can use markdown but dont have to

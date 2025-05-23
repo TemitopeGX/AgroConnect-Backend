@@ -1,119 +1,173 @@
-# 🌾 AgroConnect Naija Backend
+# 🚀 AgroConnect Naija – Backend API
 
-A farm produce aggregation platform connecting Nigerian farmers directly to buyers.
+This is the backend API for **AgroConnect Naija**, a farm produce aggregation platform that connects Nigerian farmers directly to buyers (restaurants, stores, food companies).
 
-## 🚀 Features
+## 🔧 Tech Stack
 
-- 👤 **Authentication**: Firebase-based auth with role management
-- 📦 **Produce Management**: Farmers can list and manage their produce
-- 🛒 **Order System**: Buyers can place orders with automated commission calculation
-- 💳 **Transaction Handling**: Secure database transactions for orders
-- 🔐 **Role-Based Access**: Separate farmer and buyer functionalities
+| Tech               | Description                            |
+| ------------------ | -------------------------------------- |
+| ExpressJS          | Lightweight Node.js web framework      |
+| Firebase Admin SDK | Auth verification and token decoding   |
+| PostgreSQL (Neon)  | Scalable, serverless database          |
+| JWT                | Admin session management (future use)  |
+| Vercel             | Serverless hosting (via `api/` folder) |
 
-## 🛠️ Tech Stack
+## ✅ Features
 
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: Neon PostgreSQL (Serverless)
-- **Authentication**: Firebase Admin SDK
-- **Deployment**: Vercel Serverless Functions
+### 🔐 Authentication
 
-## 📋 Prerequisites
+- Firebase Auth token verification via middleware
+- Role-based access management (farmer, buyer, admin)
 
-- Node.js >= 14.0.0
-- Firebase Project
-- Neon PostgreSQL Database
-- Vercel Account (for deployment)
+### 👤 User Management
 
-## 🔧 Setup
+- Register and store role after Firebase auth
+- Role-specific screen rendering handled by frontend
+- Prevent duplicate DB entries on new logins
 
-1. **Clone the repository**
+### 📦 Produce Listings
 
-   ```bash
-   git clone https://github.com/yourusername/agroconnect-naija-backend.git
-   cd agroconnect-naija-backend
-   ```
+- Farmers can post farm produce with:
+  - Product name
+  - Quantity
+  - Price per unit
+  - Availability status
 
-2. **Install dependencies**
+### 🛒 Orders
 
-   ```bash
-   npm install
-   ```
+- Buyers can:
+  - View all available produce
+  - Place order for specific quantity
+- Order linked to both buyer & farmer
+- Commission calculated per order (5–10%)
 
-3. **Environment Variables**
-   Create a `.env` file:
+## 📁 Project Structure
 
-   ```env
-   DATABASE_URL=your_neon_postgres_url
-   FIREBASE_ADMIN_JSON=your_firebase_admin_sdk_json
-   ```
+```
+backend/
+├── api/
+│   ├── auth/
+│   │   ├── check-user.js    # Verify existing users
+│   │   └── create-user.js   # Register new users
+│   ├── produce/
+│   │   ├── create.js        # Add new produce
+│   │   └── list.js         # List available produce
+│   ├── orders/
+│   │   ├── place.js        # Place new orders
+│   │   └── my-orders.js    # View user orders
+│   └── middleware/
+│       └── verifyToken.js   # Firebase auth middleware
+├── lib/
+│   ├── db.js              # Database connection
+│   └── firebase.js        # Firebase admin setup
+├── __tests__/            # Test files
+├── vercel.json           # Vercel configuration
+└── package.json
+```
 
-4. **Database Setup**
-   ```bash
-   npm run migrate
-   ```
+## 🚀 Getting Started
 
-## 🧪 Testing
+1. Clone the repository:
 
-Run the test suite:
+```bash
+git clone https://github.com/TemitopeGX/AgroConnect-Backend.git
+cd AgroConnect-Backend
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables in `.env`:
+
+```env
+DATABASE_URL=postgresql://username:password@host/dbname
+FIREBASE_ADMIN_JSON=your-json-encoded-firebase-admin-sdk
+```
+
+4. Run tests:
 
 ```bash
 npm test
 ```
 
-Run with coverage:
+5. Start development server:
 
 ```bash
-npm run test:coverage
+npm run dev
 ```
 
-## 🚀 Deployment
+## 🧪 Testing
 
-1. **Connect to Vercel**
+The project includes comprehensive test coverage for:
 
-   ```bash
-   vercel
-   ```
+- Authentication endpoints
+- Produce management
+- Order processing
+- Role-based access control
 
-2. **Set Environment Variables in Vercel**
+Run tests with:
 
-   - Add `DATABASE_URL`
-   - Add `FIREBASE_ADMIN_JSON`
+```bash
+npm test
+```
 
-3. **Deploy**
-   ```bash
-   vercel --prod
-   ```
+## 📦 Deployment
 
-## 📝 API Documentation
+The project is configured for deployment on Vercel:
 
-### Authentication
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables in Vercel dashboard
+3. Deploy!
 
-- `POST /api/auth/create-user`: Register new user
-- `POST /api/auth/check-user`: Verify user exists
+## 🗃️ Database Schema
 
-### Produce
+```sql
+-- Users table
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  uid VARCHAR(100) UNIQUE NOT NULL,
+  email VARCHAR(255),
+  role VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-- `POST /api/produce/create`: Create produce listing
-- `GET /api/produce/list`: List available produce
+-- Produce table
+CREATE TABLE produce (
+  id SERIAL PRIMARY KEY,
+  uid VARCHAR(100) REFERENCES users(uid),
+  name TEXT,
+  quantity INTEGER,
+  unit TEXT,
+  price INTEGER,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-### Orders
+-- Orders table
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  buyer_uid VARCHAR(100) REFERENCES users(uid),
+  produce_id INTEGER REFERENCES produce(id),
+  quantity INTEGER,
+  commission INTEGER,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
-- `POST /api/orders/place`: Place new order
-- `GET /api/orders/my-orders`: View user's orders
-
-## 👥 Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
-This project is licensed under the ISC License.
+This project is licensed under the MIT License.
 
-## 👨‍💻 Author
+## 👨🏿‍💻 Author
 
-Your Name - [@yourusername](https://github.com/yourusername)
+Created by **@TemitopeGX** — A Nigerian Fullstack Developer solving real-world problems.
