@@ -1,0 +1,77 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# 🎯 Objective:
+Build the React Native (Expo) frontend for AgroConnect Naija using the live backend deployed on Vercel. The backend is ready and authenticated via Firebase. Your job now is to develop the mobile app interfaces, role-specific user flows, and connect each screen with the appropriate backend endpoint.
+
+🛠️ Tech Stack
+Layer	Tech
+Frontend Framework	React Native (Expo CLI)
+Navigation	@react-navigation/native
+Authentication	Firebase Auth
+API Connection	REST with fetch or Axios
+State Management	Context API or Zustand (optional)
+
+🔄 Flow Overview
+1. Auth & Role Setup
+Register/Login using Firebase Auth
+
+After login, call:
+POST /api/auth/check-user
+
+If the user does not exist in your database:
+
+Show Role Picker Screen
+
+Call:
+POST /api/auth/create-user
+
+2. Farmer Flow
+Home Screen (Welcome + Post Produce Button)
+
+Produce Upload Screen (POST /api/produce/create)
+
+My Orders (GET /api/orders/my-orders)
+
+3. Buyer Flow
+Home Screen (Produce List from /api/produce/list)
+
+Order Produce (POST /api/orders/place)
+
+My Orders (GET /api/orders/my-orders)
+
+📦 API Reference (Live)
+Base URL: https://agro-connect-backend.vercel.app
+
+Purpose	Endpoint	Method
+Check User	/api/auth/check-user	POST
+Register Role	/api/auth/create-user	POST
+Create Produce	/api/produce/create	POST
+List Produce	/api/produce/list	GET
+Place Order	/api/orders/place	POST
+My Orders	/api/orders/my-orders	GET
+
+🔐 Firebase Auth Flow
+Sign in via Firebase (Google/Email)
+
+Get firebaseToken using:
+const token = await firebase.auth().currentUser.getIdToken();
+Use this token in every API request like so:
+'Authorization': `Bearer ${firebaseToken}`
+
+⛔ DON’T:
+Don't skip the role-check step after login.
+Don’t mix role screens.
+Don’t build admin web dashboard yet — that’s future scope.
+
+✅ DO:
+Comment code properly.
+Group screens and logic by role (e.g. screens/farmer, screens/buyer)
+Reuse API base URL from a central config file
+
+
+- You can @ files here
+- You can use markdown but dont have to

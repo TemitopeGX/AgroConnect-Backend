@@ -10,7 +10,7 @@
     "test:watch": "jest --watch --config jest.config.js",
     "test:coverage": "jest --coverage --config jest.config.js",
     "lint": "eslint src/",
-    "migrate": "node src/db/migrations/run.js"
+    "migrate": "node scripts/migrate.js"
   },
   "keywords": [
     "agriculture",
